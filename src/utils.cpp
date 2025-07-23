@@ -46,3 +46,7 @@ void printSpecial(RawValue acc_values, RawValue gyro_values){
 void printSpecial(NormalizedValue acc_values, NormalizedValue gyro_values){
     Serial.printf("$%.6f %.6f %.6f %.6f %.6f %.6f;\n", acc_values.x, acc_values.y, acc_values.z, gyro_values.x, gyro_values.y, gyro_values.z);
 }
+
+void printAngle(Angle angle){
+    Serial.printf("$%.6f %.6f %.6f;\n", angle.x, angle.y, angle.z);
+}

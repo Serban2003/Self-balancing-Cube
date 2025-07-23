@@ -12,5 +12,6 @@ void printCSV(RawValue acc_values, RawValue gyro_values);
 void printCSV(NormalizedValue acc_values, NormalizedValue gyro_values);
 void printSpecial(RawValue acc_values, RawValue gyro_values);
 void printSpecial(NormalizedValue acc_values, NormalizedValue gyro_values);
+void printAngle(Angle angle);
 
 #endif // UTILS_H

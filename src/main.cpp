@@ -2,6 +2,7 @@
 #include <data_types.h>
 #include <current_config.h>
 #include <normalizer.h>
+#include <angles.h>
 #include <utils.h>
 #include "I2Cdev.h"
 #include "MPU6050.h"
@@ -13,10 +14,10 @@
 MPU6050 accelgyro;
 RawValue accelerometer_raw, gyroscope_raw;
 NormalizedValue accelerometer_norm, gyroscope_norm;
+Angle accelerometer_angle, gyroscope_angle;
 Angle currentPosition;
 
-#define LED_PIN 13
-bool blinkState = false;
+uint32_t sampleTimeMicros = 0;
 
 void setup() {
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
@@ -40,25 +41,25 @@ void setup() {
     I2Cdev::writeByte(MPU6050_IMU_ADDRESS, GYRO_CONFIG_ADDRESS, GYRO_CONFIG_VALUE); // Configure gyroscope range
     I2Cdev::writeByte(MPU6050_IMU_ADDRESS, ACC_CONFIG_ADDRESS, ACC_CONFIG_VALUE); // Configure accelerometer range
     I2Cdev::writeByte(MPU6050_IMU_ADDRESS, INT_ENABLE_ADDRESS, 0x01); // Enable interrupt pin for raw data
-
-    // configure Arduino LED pin for output
-    pinMode(LED_PIN, OUTPUT);
 }
 
 void loop() {
+
+    uint32_t elapsedTimeMicros = 0;
+    if(sampleTimeMicros > 0) elapsedTimeMicros = micros() - sampleTimeMicros;
+    sampleTimeMicros = micros();
+
     // read raw accel/gyro measurements from device
     accelgyro.getMotion6(&accelerometer_raw.x, &accelerometer_raw.y, &accelerometer_raw.z, &gyroscope_raw.x, &gyroscope_raw.y, &gyroscope_raw.z);
-    
-    //printReadable("Raw Accelometer Data", accelerometer_raw);
-    //printReadable("Raw Gyroscope Data", gyroscope_raw);
-
     accelerometer_norm = normalizeAccelerometer(accelerometer_raw);
     gyroscope_norm = normalizeGyroscope(gyroscope_raw);
 
-    printSpecial(accelerometer_norm, gyroscope_norm);
+    accelerometer_angle = computeAccelerometerAngles(accelerometer_norm);
+    gyroscope_angle = computeGyroscopeAngles(gyroscope_norm, elapsedTimeMicros);
 
-    // blink LED to indicate activity
-    blinkState = !blinkState;
-    digitalWrite(LED_PIN, blinkState);
+    currentPosition = computePosition(currentPosition, gyroscope_angle, accelerometer_angle);
+
+    printAngle(currentPosition);
+
     delay(100);
 }
