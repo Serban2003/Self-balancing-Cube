@@ -19,16 +19,10 @@ struct RawValue{
     int16_t z;
 };
 
-struct NormalizedValue {
-    float x;
-    float y;
-    float z; 
-};
-
 struct Angle{
     float x; // Pitch
     float y; // Roll
     float z; // Yaw
-};
+}; // deg/s
 
 #endif // DATA_TYPES_H
