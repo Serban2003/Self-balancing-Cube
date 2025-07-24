@@ -1,12 +1,13 @@
 #include <Arduino.h>
-#include <data_types.h>
-#include <current_config.h>
-#include <normalizer.h>
-#include <angles.h>
-#include <utils.h>
-#include "I2Cdev.h"
-#include "MPU6050.h"
-#include "Wire.h"
+#include <I2Cdev.h>
+#include <MPU6050.h>
+#include <Wire.h>
+#include "data_types.h"
+#include "current_config.h"
+#include "normalizer.h"
+#include "angle.h"
+#include "IMUQuaternion.h"
+#include "utils.h"
 
 MPU6050 accelgyro;
 I2Cdev i2c;
@@ -16,6 +17,7 @@ Angle accelerometer_angle, gyroscope_angle;
 Angle currentPosition;
 
 uint32_t sampleTimeMicros = 0;
+uint32_t lastPrintTime = 0;
 
 void setup() {
     delay(1000);
@@ -36,7 +38,6 @@ void setup() {
 }
 
 void loop() {
-
     uint32_t elapsedTimeMicros = 0;
     if(sampleTimeMicros > 0) elapsedTimeMicros = micros() - sampleTimeMicros;
     sampleTimeMicros = micros();
@@ -49,19 +50,24 @@ void loop() {
     accelerometer_angle = computeAccelerometerAngles(accelerometer_norm);
     gyroscope_angle = computeGyroscopeAngles(gyroscope_norm, elapsedTimeMicros);
 
+    // Complementary filter
     currentPosition = computePosition(currentPosition, gyroscope_angle, accelerometer_angle);
-    Serial.println(sampleTimeMicros);
-    printAngle(currentPosition);
+    IMUQuaternion rotation = eulerToQuaternion(currentPosition);
 
-    #ifdef DEBUG_ENABLED
-        printReadable("Accelerometer Raw", accelerometer_raw);
-        printReadable("Accelerometer Norm", accelerometer_norm);
-        printReadable("Accelerometer Angle", accelerometer_angle);
-        printReadable("Gyroscope Raw", gyroscope_raw);
-        printReadable("Gyroscope Norm", gyroscope_norm);
-        printReadable("Gyroscope Angle", gyroscope_angle);
+    if (sampleTimeMicros - lastPrintTime > PRINT_INTERVAL_MS * 1000UL){
+        lastPrintTime = sampleTimeMicros;
+
         printAngle(currentPosition);
-    #endif
-    //verifyMPUSettings();
+        printQuaternion(rotation);
+        #ifdef DEBUG_ENABLED
+            printReadable("Accelerometer Raw", accelerometer_raw);
+            printReadable("Accelerometer Norm", accelerometer_norm);
+            printReadable("Accelerometer Angle", accelerometer_angle);
+            printReadable("Gyroscope Raw", gyroscope_raw);
+            printReadable("Gyroscope Norm", gyroscope_norm);
+            printReadable("Gyroscope Angle", gyroscope_angle);
+            printAngle(currentPosition);
+        #endif
+    }
     delay(100);
 }

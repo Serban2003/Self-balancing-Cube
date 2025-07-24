@@ -48,8 +48,13 @@ void printSpecial(Angle acc_values, Angle gyro_values){
 }
 
 void printAngle(Angle angle){
-    Serial.printf("$%.6f %.6f %.6f;\n", angle.x, angle.y, angle.z);
+    Serial.printf("%.6f %.6f %.6f\n", angle.x, angle.y, angle.z);
 }
+
+void printQuaternion(IMUQuaternion quaternion){
+    Serial.printf("%.6f %.6f %.6f %.6f\n", quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+}
+
 void verifyMPUSettings() {
   uint8_t val;
 

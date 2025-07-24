@@ -20,9 +20,16 @@ struct RawValue{
 };
 
 struct Angle{
-    float x; // Pitch
-    float y; // Roll
+    float x; // Roll
+    float y; // Pitch
     float z; // Yaw
 }; // deg/s
+
+struct IMUQuaternion{
+    float w;
+    float x;
+    float y;
+    float z;
+}; // [w, x, y, z]
 
 #endif // DATA_TYPES_H

@@ -13,6 +13,7 @@ void printCSV(Angle acc_values, Angle gyro_values);
 void printSpecial(RawValue acc_values, RawValue gyro_values);
 void printSpecial(Angle acc_values, Angle gyro_values);
 void printAngle(Angle angle);
+void printQuaternion(IMUQuaternion quaternion);
 void verifyMPUSettings();
 
 #endif // UTILS_H
