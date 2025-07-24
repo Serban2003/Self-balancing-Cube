@@ -1,0 +1,4 @@
+https://vanhunteradams.com/Pico/ReactionWheel/Complementary_Filters.html
+https://en.wikipedia.org/wiki/Euler_angles
+https://liqul.github.io/blog/assets/rotation.pdf
+https://stengel.mycpanel.princeton.edu/Quaternions.pdf !!!
