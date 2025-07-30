@@ -16,7 +16,9 @@
 
 /* ---------- DEBUG ---------- */
 #define PRINT_INTERVAL_MS 1000
+#define SAMPLE_TIME_MS 50
 //#define DEBUG_ENABLED 
+//#define DEBUG_MOTORS_ENABLED
 /* ---------- DEBUG ---------- */
 
 /* ---------- PWM SETUP ---------- */
@@ -26,30 +28,33 @@
 
 /* ---------- MOTOR ID1 ---------- */
 #define MOTOR_PPR 100
+#define M1_ID 1
 #define M1_PWM 19
 #define M1_EN 32 // BRAKE
 #define M1_DIR 4
 #define M1_ENC_SIG_A 35
 #define M1_ENC_SIG_B 33
-const float M1_PID_COEF[3] = {1, 0.9272, -0.7636};
+const float M1_PID_COEF[3] = {1.0f, 0.9272f, -0.7636f};
 /* ---------- MOTOR ID1 ---------- */
 
 /* ---------- MOTOR ID2 ---------- */
+#define M2_ID 2
 #define M2_PWM 26
 #define M2_EN 25
 #define M2_DIR 15
 #define M2_ENC_SIG_A 13
 #define M2_ENC_SIG_B 14
-const float M2_PID_COEF[3] = {1, 0.9201, -0.7569};
+const float M2_PID_COEF[3] = {1.0f, 0.9201f, -0.7569f};
 /* ---------- MOTOR ID2 ---------- */
 
 /* ---------- MOTOR ID3 ---------- */
+#define M3_ID 3
 #define M3_PWM 27
 #define M3_EN 18
 #define M3_DIR 5
 #define M3_ENC_SIG_A 16
 #define M3_ENC_SIG_B 17
-const float M3_PID_COEF[3] = {1, 0.9229, -0.7601};
+const float M3_PID_COEF[3] = {1.0f, 0.9229f, -0.7601f};
 /* ---------- MOTOR ID3 ---------- */
 
 /* DO NOT MODIFY ANY BELOW CODE */
