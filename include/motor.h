@@ -19,7 +19,6 @@ extern volatile float M1_targetRPM;
 extern volatile float M2_targetRPM;
 extern volatile float M3_targetRPM;
 
-//void PID(uint8_t motorID, float targetRPM, float currentRPM);
 void M1_PID(float targetRPM, float currentRPM);
 void M2_PID(float targetRPM, float currentRPM);
 void M3_PID(float targetRPM, float currentRPM);

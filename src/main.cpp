@@ -26,53 +26,51 @@ uint32_t lastPrintTime = 0;
 
 void setup() {
     delay(1000);
-    { //TO BE TESTED
-        SerialBT.begin("Cubli ESP32");
-        /* ---------- Motor ID1 ---------- */
-        pinMode(M1_EN, OUTPUT);
-        digitalWrite(M1_EN, LOW);
+    SerialBT.begin("Cubli ESP32");
+    /* ---------- Motor ID1 ---------- */
+    pinMode(M1_EN, OUTPUT);
+    digitalWrite(M1_EN, LOW);
 
-        pinMode(M1_DIR, OUTPUT);
-        pinMode(M1_ENC_SIG_A, INPUT);
-        pinMode(M1_ENC_SIG_B, INPUT);
-        attachInterrupt(digitalPinToInterrupt(M1_ENC_SIG_A), M1_updateEncoder, CHANGE);
+    pinMode(M1_DIR, OUTPUT);
+    pinMode(M1_ENC_SIG_A, INPUT);
+    pinMode(M1_ENC_SIG_B, INPUT);
+    attachInterrupt(digitalPinToInterrupt(M1_ENC_SIG_A), M1_updateEncoder, CHANGE);
 
-        pinMode(M1_PWM, OUTPUT);
-        ledcAttach(M1_PWM, BASE_FREQ, TIMER_BIT);
-        controlMotor(M1_ID, 0);
-        brakeMotor(M1_ID, false);
-        /* ---------- Motor ID1 ---------- */
+    pinMode(M1_PWM, OUTPUT);
+    ledcAttach(M1_PWM, BASE_FREQ, TIMER_BIT);
+    controlMotor(M1_ID, 0);
+    brakeMotor(M1_ID, false);
+    /* ---------- Motor ID1 ---------- */
 
-        /* ---------- Motor ID2 ---------- */
-        pinMode(M2_EN, OUTPUT);
-        digitalWrite(M2_EN, LOW);
+    /* ---------- Motor ID2 ---------- */
+    pinMode(M2_EN, OUTPUT);
+    digitalWrite(M2_EN, LOW);
 
-        pinMode(M2_DIR, OUTPUT);
-        pinMode(M2_ENC_SIG_A, INPUT);
-        pinMode(M2_ENC_SIG_B, INPUT);
-        attachInterrupt(digitalPinToInterrupt(M2_ENC_SIG_A), M2_updateEncoder, CHANGE);
+    pinMode(M2_DIR, OUTPUT);
+    pinMode(M2_ENC_SIG_A, INPUT);
+    pinMode(M2_ENC_SIG_B, INPUT);
+    attachInterrupt(digitalPinToInterrupt(M2_ENC_SIG_A), M2_updateEncoder, CHANGE);
 
-        pinMode(M2_PWM, OUTPUT);
-        ledcAttach(M2_PWM, BASE_FREQ, TIMER_BIT);
-        controlMotor(M2_ID, 0);
-        brakeMotor(M2_ID, false);
-        /* ---------- Motor ID2 ---------- */
+    pinMode(M2_PWM, OUTPUT);
+    ledcAttach(M2_PWM, BASE_FREQ, TIMER_BIT);
+    controlMotor(M2_ID, 0);
+    brakeMotor(M2_ID, false);
+    /* ---------- Motor ID2 ---------- */
 
-        /* ---------- Motor ID3 ---------- */
-        pinMode(M3_EN, OUTPUT);
-        digitalWrite(M3_EN, LOW);
+    /* ---------- Motor ID3 ---------- */
+    pinMode(M3_EN, OUTPUT);
+    digitalWrite(M3_EN, LOW);
 
-        pinMode(M3_DIR, OUTPUT);
-        pinMode(M3_ENC_SIG_A, INPUT);
-        pinMode(M3_ENC_SIG_B, INPUT);
-        attachInterrupt(digitalPinToInterrupt(M3_ENC_SIG_A), M3_updateEncoder, CHANGE);
+    pinMode(M3_DIR, OUTPUT);
+    pinMode(M3_ENC_SIG_A, INPUT);
+    pinMode(M3_ENC_SIG_B, INPUT);
+    attachInterrupt(digitalPinToInterrupt(M3_ENC_SIG_A), M3_updateEncoder, CHANGE);
 
-        pinMode(M3_PWM, OUTPUT);
-        ledcAttach(M3_PWM, BASE_FREQ, TIMER_BIT);
-        controlMotor(M3_ID, 0);
-        brakeMotor(M3_ID, false);
-    }
-
+    pinMode(M3_PWM, OUTPUT);
+    ledcAttach(M3_PWM, BASE_FREQ, TIMER_BIT);
+    controlMotor(M3_ID, 0);
+    brakeMotor(M3_ID, false);
+    
     Wire.begin();
     Serial.begin(115200);
 
